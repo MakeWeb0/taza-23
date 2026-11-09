@@ -9,13 +9,14 @@
   if (!motion) document.documentElement.classList.add("reduced");
   if (hasGsap) gsap.registerPlugin(ScrollTrigger);
 
-  /* ---------------------------------------------------------- hero video: portrait cut on portrait screens */
+  /* ---------------------------------------------------------- hero video (its source is picked inline in the HTML, before loading) */
   const hv = $("[data-hero]");
-  if (innerHeight > innerWidth * 1.05) {
-    hv.poster = "assets/img/hero-v.jpg";
-    hv.querySelector("source").src = "assets/video/hero-v.mp4";
-    hv.load();
-  }
+  // nothing heavy downloads until the hero can play through, so it never sits frozen on a first visit
+  const heroReady = new Promise((ok) => {
+    if (hv.readyState >= 4) return ok();
+    hv.addEventListener("canplaythrough", ok, { once: true });
+    setTimeout(ok, 8000);
+  });
 
   /* ---------------------------------------------------------- videos play only when visible */
   const io = new IntersectionObserver((es) => es.forEach((e) => {
@@ -136,7 +137,7 @@
       rVid.src = URL.createObjectURL(b);
       rVid.addEventListener("loadeddata", seek, { once: true });
     }).catch(() => {});
-    ScrollTrigger.create({ trigger: rit, start: "top 300%", once: true, onEnter: loadBlob });
+    ScrollTrigger.create({ trigger: rit, start: "top 220%", once: true, onEnter: () => heroReady.then(loadBlob) });
     rVid.addEventListener("seeked", () => { if (Math.abs(rVid.currentTime - want) > 0.04) rVid.currentTime = want; });
     // iOS paints seeked frames only after one play()
     addEventListener("touchstart", () => { const p = rVid.play(); if (p) p.then(() => { rVid.pause(); seek(); }).catch(() => {}); }, { once: true, passive: true });

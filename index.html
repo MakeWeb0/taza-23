@@ -37,8 +37,9 @@
 </div>
 <main>
 <section class="hero" id="top" data-theme="dark">
-<video class="hero__video" data-hero autoplay muted loop playsinline preload="auto" poster="assets/img/hero-h.jpg">
-<source src="assets/video/hero-h.mp4" type="video/mp4"></video>
+<video class="hero__video" data-hero autoplay muted loop playsinline preload="auto"></video>
+<script>(function(v){var c=innerHeight>innerWidth*1.05?"v":"h";v.poster="assets/img/hero-"+c+".jpg";v.src="assets/video/hero-"+c+".mp4";})(document.currentScript.previousElementSibling)</script>
+<noscript><img class="hero__video" src="assets/img/hero-h.jpg" alt=""></noscript>
 <div class="hero__shade"></div>
 <div class="palmas palmas--dark palmas--hero" aria-hidden="true"><img class="pb" src="assets/img/palmas-b.webp" alt=""><img class="pa" src="assets/img/palmas-a.webp" alt=""></div>
 <div class="hero__inner">
@@ -79,7 +80,7 @@
 <p class="rit__lead">Así lo preparamos en Taza 23, uno a uno, detrás de la barra.</p>
 </div>
 <div class="rit__media" data-rit-media>
-<video src="assets/video/ritual.mp4" poster="assets/img/ritual.jpg" muted playsinline preload="metadata" data-rit-video aria-label="Así preparamos un café en Taza 23"></video>
+<video src="assets/video/ritual.mp4" poster="assets/img/ritual.jpg" muted playsinline preload="none" data-rit-video aria-label="Así preparamos un café en Taza 23"></video>
 <span class="rit__frame" aria-hidden="true"></span>
 <span class="rit__shade" aria-hidden="true"></span>
 </div>
